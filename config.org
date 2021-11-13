@@ -1,0 +1,68 @@
+#+TITLE Dustin Neumann's Own Emacs Config File
+
+* Initialization
+
+#+BEGIN_SRC emacs-lisp
+
+(message "Initializing Deumacs")
+
+(tool-bar-mode -1)
+(load-theme 'adwaita t)
+
+#+END_SRC
+
+* Package repositoriesp
+
+Extending the package archives with melpa and org/elpa 
+
+#+BEGIN_SRC emacs-lisp
+
+(message "Configuring package archives")
+
+(require 'package)
+
+(setq package-archives 
+  '(("org"       . "http://orgmode.org/elpa/")
+    ("gnu"       . "http://elpa.gnu.org/packages/")
+    ("melpa"     . "http://melpa.org/packages/")))
+
+(package-initialize)
+(package-refresh-contents)
+
+#+END_SRC
+
+Bootstrap use package
+
+#+BEGIN_SRC emacs-lisp
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+
+(setq use-package-always-ensure t)
+
+#+END_SRC
+* Emacs Behavior
+
+** User Helpers
+
+*** Which Key
+
+#+begin_src emacs-lisp
+
+(use-package which-key
+  :config (which-key-mode)
+          (which-key-setup-side-window-bottom)
+          (setq which-key-idle-delay 0.5))
+
+#+end_src
+
+** Git Workflow
+
+#+begin_src emacs-lisp
+
+(use-package magit
+  :config (global-set-key (kbd "C-x g") 'magit-status))
+
+#+end_src
